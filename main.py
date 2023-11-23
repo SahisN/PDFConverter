@@ -10,7 +10,10 @@ width, height = 700, 600
 
 # screen apperance
 window.geometry(f"{width}x{height}")  # window size
+window.title("PDF Converter")  # set title
+# window.iconbitmap("./assets/app_logo.ico")
 customtkinter.set_appearance_mode("dark")  # app theme
+customtkinter.set_widget_scaling(1.1)
 
 # tabview - contains tab
 tabview = customtkinter.CTkTabview(master=window, width=width, height=height)

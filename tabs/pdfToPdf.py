@@ -82,7 +82,9 @@ class pdfToPdfs:
                 for pdf in self.file_paths:
                     merger.append(pdf.name)
                 merger.write(save_path)
-                MessageBox(self.tab, "Save Successful").success_message()
+                MessageBox(
+                    self.tab, f"Save Successful at {save_path}"
+                ).success_message()
 
             except:
                 MessageBox(self.tab, "Unable to write").error_message()
