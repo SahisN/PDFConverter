@@ -37,13 +37,14 @@ class MessageBox:
 
     # shows when a save is successful
     def success_message(self):
-        CTkMessagebox(
+        return CTkMessagebox(
             master=self.master,
             width=self.width,
             height=self.height,
             title="Save Successfull",
             message=self.message,
             option_1="OK",
+            option_2="Take me there",
             icon="check",
         )
 
@@ -58,15 +59,3 @@ class MessageBox:
             option_1="OK",
             icon="cancel",
         )
-
-
-"""
-CTkMessagebox.CTkMessagebox(
-                master=self.tab,
-                width=400,
-                height=200,
-                title="No files selected",
-                message="Atleast 2 files need to be selected",
-                option_1="OK",
-            )
-"""

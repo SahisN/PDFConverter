@@ -6,14 +6,20 @@ from tabs.pdfToPdf import pdfToPdfs
 # window
 window = customtkinter.CTk()
 
+# app screen size
 width, height = 700, 600
 
+# get screen width and height
+x = (window.winfo_screenwidth() / 2) - (width / 2)
+y = (window.winfo_screenheight() / 2) - (height / 2)
+
 # screen apperance
-window.geometry(f"{width}x{height}")  # window size
+# window.geometry(f"{width}x{height}")  # window size
+window.geometry("%dx%d+%d+%d" % (width, height, x + 200, y))  # window size & position
 window.title("PDF Converter")  # set title
-# window.iconbitmap("./assets/app_logo.ico")
+window.resizable(False, False)
 customtkinter.set_appearance_mode("dark")  # app theme
-customtkinter.set_widget_scaling(1.1)
+customtkinter.set_widget_scaling(1.1)  # set widget scaling size
 
 # tabview - contains tab
 tabview = customtkinter.CTkTabview(master=window, width=width, height=height)
@@ -29,7 +35,6 @@ tab1_content = imageToPdf(tab=tab1, height=height, width=width)
 
 # tab 2 - content
 tab2_content = pdfToPdfs(tab=tab2, height=height, width=width)
-
-
 tabview.pack()
+
 window.mainloop()

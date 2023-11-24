@@ -4,6 +4,7 @@ from PIL import Image
 from utility.messagebox import MessageBox
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
+from utility.file_manager_handler import FileManagerHandler
 
 
 class imageToPdf:
@@ -12,6 +13,7 @@ class imageToPdf:
         self.tab = tab
         self.text_box = customtkinter.CTkTextbox(
             master=tab,
+            state="disable",
             height=height - 200,
             width=width - 250,
         )
@@ -23,7 +25,7 @@ class imageToPdf:
         frame.pack()
 
         add_button = customtkinter.CTkButton(
-            master=frame, text="Add File", command=self.open_file
+            master=frame, text="Add Files", command=self.open_file
         )
         save_button = customtkinter.CTkButton(
             master=frame, text="Convert To PDF", command=self.save_file
@@ -59,13 +61,17 @@ class imageToPdf:
         self.file_paths.extend(current_file_paths)
 
         # update textbox
+        self.text_box.configure(state="normal")
         for file_path in current_file_paths:
             self.text_box.insert(index=END, text=f"{file_path.name}\n")
+        self.text_box.configure(state="disable")
 
     # clears file_paths array used to merge and save images
     def clear(self):
+        self.text_box.configure(state="normal")
         self.file_paths.clear()
         self.text_box.delete("1.0", "end")
+        self.text_box.configure(state="disable")
 
     def save_file(self):
         # if no image file are selected, prompt user to select a image file
@@ -110,9 +116,15 @@ class imageToPdf:
                 pdf_canvas.save()
 
                 # notify user that file has been saved
-                MessageBox(
+                msg = MessageBox(
                     self.tab, message=f"Save Successful at {save_path}"
                 ).success_message()
+
+                print(save_path)
+
+                # if user request to reveal the recently saved file
+                if msg.get() == "Take me there":
+                    FileManagerHandler(save_path)
 
             except:
                 MessageBox(self.tab, message="Unable to write").error_message()
